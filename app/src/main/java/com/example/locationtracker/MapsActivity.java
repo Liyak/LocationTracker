@@ -10,6 +10,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+/**
+ * Created by LiyaK on 03-04-2022.
+ */
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -45,5 +48,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setScrollGesturesEnabled(true);
         mMap.getUiSettings().setTiltGesturesEnabled(false);
         mMap.getUiSettings().setRotateGesturesEnabled(false);
+        setUpMapIfNeeded();
+    }
+    private void setUpMapIfNeeded() {
+
+        if (mMap != null) {
+            setUpMap();
+        }
+
+    }
+
+    /*To create the Marker*/
+    private void setUpMap() {
+        Marker kochi = mMap.addMarker(new MarkerOptions().position(new LatLng(9.9312, 76.2673)).title("Kochi"));
+        Marker coimbatore = mMap.addMarker(new MarkerOptions().position(new LatLng(11.0168, 76.9558)).title("Coimbatore"));
+        Marker madurai = mMap.addMarker(new MarkerOptions().position(new LatLng(9.9252, 78.1198)).title("Madurai"));
+        Marker munnar = mMap.addMarker(new MarkerOptions().position(new LatLng(10.0889, 77.0595)).title("Munnar"));
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        builder.include(kochi.getPosition());
+        builder.include(coimbatore.getPosition());
+        builder.include(madurai.getPosition());
+        builder.include(munnar.getPosition());
+        mOrigin = kochi.getPosition();
+        mDestination = munnar.getPosition();
+        drawRoute();
+
     }
 }
